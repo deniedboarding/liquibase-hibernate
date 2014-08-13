@@ -14,8 +14,8 @@ import javax.persistence.spi.PersistenceUnitInfo;
 import java.util.Collections;
 
 /**
- * Database implementation for "spring" hibernate configurations.
- * This supports passing a spring XML file reference and bean name or a package containing hibernate annotated classes.
+ * Database implementation for JPA configurations.
+ * This supports passing a JPA persistence XML file reference.
  */
 public class JpaPersistenceDatabase extends HibernateDatabase {
 
@@ -37,13 +37,14 @@ public class JpaPersistenceDatabase extends HibernateDatabase {
     }
 
     /**
-     * Build a Configuration object assuming the connection path is a hibernate XML configuration file.
+     * Build a Configuration object assuming the connection path is a persistence XML configuration file.
      */
 
     protected Configuration buildConfigurationFromXml(HibernateConnection connection) {
         DefaultPersistenceUnitManager internalPersistenceUnitManager = new DefaultPersistenceUnitManager();
 
         internalPersistenceUnitManager.setPersistenceXmlLocation(connection.getPath());
+        internalPersistenceUnitManager.setDefaultPersistenceUnitRootLocation(null);
 
         internalPersistenceUnitManager.preparePersistenceUnitInfos();
         PersistenceUnitInfo persistenceUnitInfo = internalPersistenceUnitManager.obtainDefaultPersistenceUnitInfo();
